@@ -2,7 +2,7 @@ package leetcode;
 
 import java.util.HashSet;
 
-public class P0217_ContainsDuplicate {
+public class ContainsDuplicate {
     public boolean containsDuplicate(int[] nums) {
         HashSet<Integer> set = new HashSet<>();
 

@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-class P0217_ContainsDuplicateTest {
-    private final P0217_ContainsDuplicate solution = new P0217_ContainsDuplicate();
+class ContainsDuplicateTest {
+    private final ContainsDuplicate solution = new ContainsDuplicate();
 
     @Test
     void test1() {
