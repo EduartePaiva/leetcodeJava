@@ -1,48 +1,33 @@
 package leetcode;
 
-import java.util.HashMap;
+import java.util.HashSet;
 
 public class LongestConsecutiveSequence {
 
     public int longestConsecutive(int[] nums) {
-        // union find problem????
-
-        // start/end
-        HashMap<Integer, Integer> table = new HashMap<Integer, Integer>();
-
-        for (int n : nums) {
-            int start = n;
-            int end = getEndNode(start, table);
-
-            table.put(start, end);
-
+        if (nums.length == 0) {
+            return 0;
         }
 
+        // start/end
+        HashSet<Integer> set = new HashSet<Integer>();
+        for (int n : nums) {
+            set.add(n);
+        }
         int max = 1;
+        for (int n : set) {
+            // check if it's start of sequence
+            if (!set.contains(n - 1)) {
+                int end = n;
+                do {
+                    end++;
+                } while (set.contains(end));
 
-        for (int start : table.keySet()) {
-            int end = getEndNode(start, table);
-
-            max = Integer.max((end - start) + 1, max);
-
+                max = Math.max(max, end - n);
+            }
         }
 
         return max;
     }
 
-    private int getEndNode(int start, HashMap<Integer, Integer> table) {
-        int cur = start;
-
-        while (table.containsKey(cur)) {
-            int nextValue = table.get(cur);
-            if (nextValue == cur) {
-                break;
-            }
-            table.put(cur, table.getOrDefault(nextValue, nextValue));
-
-            cur = nextValue;
-        }
-
-        return cur;
-    }
 }
