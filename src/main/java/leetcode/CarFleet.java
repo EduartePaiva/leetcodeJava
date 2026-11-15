@@ -1,36 +1,36 @@
 package leetcode;
 
 import java.util.ArrayList;
-import java.util.Stack;
+import java.util.List;
 
 public class CarFleet {
-    record CarWithSpeed(int position, int speed) {
+    record Car(int position, int speed) {
     }
 
     public int carFleet(int target, int[] position, int[] speed) {
         // group fleets based where they'll meet target
 
-        var sortedCars = new ArrayList<CarWithSpeed>();
+        List<Car> sortedCars = new ArrayList<>();
         for (int i = 0; i < position.length; i++) {
-            sortedCars.add(new CarWithSpeed(position[i], speed[i]));
+            sortedCars.add(new Car(position[i], speed[i]));
         }
-        sortedCars.sort((c1, c2) -> c2.position - c1.position);
+        sortedCars.sort((c1, c2) -> Integer.compare(c2.position(), c1.position()));
 
-        var stack = new Stack<Double>();
+        double lastFleetTime = 0;
+        int fleets = 0;
 
-        // now we have to count number of fleets.
-
-        for (var car : sortedCars) {
+        for (Car car : sortedCars) {
             // math the time current car will take to cross target.
-            int distance = target - car.position;
-            double timeToFinish = (double) distance / (double) car.speed;
+            int distance = target - car.position();
+            double time = (double) distance / (double) car.speed();
 
-            if (stack.isEmpty() || timeToFinish > stack.peek()) {
-                stack.push(timeToFinish);
+            if (time > lastFleetTime) {
+                fleets++;
+                lastFleetTime = time;
             }
 
         }
 
-        return stack.size();
+        return fleets;
     }
 }
